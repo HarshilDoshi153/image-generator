@@ -13,6 +13,7 @@ const Container = styled.div`
   overflow-x: hidden;
   overflow-y: hidden;
   transition: all 0.2s ease;
+  font-family: Arial, "Times New Roman", serif;
 `;
 const Wrapper = styled.div`
   height: 100%;

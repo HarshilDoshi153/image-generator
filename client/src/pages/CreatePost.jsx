@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import GenerateImageForm from '../components/GenerateImageForm';
+import GenerateImageCard from '../components/GenerateImageCard';
 
 const Container = styled.div`
   height: 100%;
@@ -33,7 +35,8 @@ const CreatePost = () => {
   return (
     <Container>
       <Wrapper>
-        Create Post
+        <GenerateImageForm/>
+        <GenerateImageCard/>
       </Wrapper>
     </Container>
   )

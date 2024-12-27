@@ -60,7 +60,7 @@ const TextInput = ({
           as={textArea ? "textarea" : "input"}
           name={name}
           rows={rows}
-          columns={columns}
+          cols={columns}
           placeholder={placeholder}
           value={value}
           onChange={(e) => handelChange(e)}
