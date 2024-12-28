@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import GenerateImageForm from '../components/GenerateImageForm';
 import GenerateImageCard from '../components/GenerateImageCard';
@@ -12,6 +12,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 20px;
   @media (max-width: 768){
     padding: 6px 10px
@@ -19,7 +20,7 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  flex: 1;
+  width: 100%;
   height: fit-content;
   display: flex;
   justify-content: center;
@@ -32,11 +33,18 @@ const Wrapper = styled.div`
 `;
 
 const CreatePost = () => {
+  const [generateImageLoading, setGenerateImageLoading] = useState(false);
+  const [createPostLoading, setCreatePostLoading] = useState(false);
+  const [post, setPost] = useState({
+    author: "",
+    prompt: "",
+    photo: ""
+  })
   return (
     <Container>
       <Wrapper>
-        <GenerateImageForm/>
-        <GenerateImageCard/>
+        <GenerateImageForm post={post} setPost={setPost} createPostLoading={createPostLoading} setCreatePostLoading={setCreatePostLoading} generateImageLoading={generateImageLoading} setGenerateImageLoading={setGenerateImageLoading}/>
+        <GenerateImageCard loading={generateImageLoading} src={post.photo}/>
       </Wrapper>
     </Container>
   )
