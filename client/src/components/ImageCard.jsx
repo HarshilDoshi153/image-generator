@@ -58,12 +58,12 @@ const Prompt = styled.div`
     font-size: 14px; 
     color: ${({ theme }) => theme.white}
 `;
-const ImageCard = (item) => {
+const ImageCard = ({item}) => {
 
     const [hovered, setHovered] = useState(false);
     return (
         <Card>
-            <LazyLoadImage style={{ borderRadius: "12px" }} width="100%" src={item.photo} alt={item?.prompt} />
+            <LazyLoadImage style={{ borderRadius: "12px" }} width="100%" src={item?.photo} alt={item?.prompt} />
             <HoverOverLay>
                 <Prompt>{item?.prompt}</Prompt>
                 <div style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>

@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import SearchBar from '../components/SearchBar';
 import ImageCard from '../components/ImageCard';
+import { GetPosts } from '../api/index.js';
+import { CircularProgress } from '@mui/material';
 
 const Container = styled.div`
   height: 100%;
@@ -57,19 +59,79 @@ const CardWrapper = styled.div`
   }
 `;
 const Home = () => {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [search, setSearch] = useState("");
+  const [filteredPosts, setFilteredPosts] = useState([]);
+
+  const getPosts = async () => {
+    setLoading(true);
+    try {
+      const res = await GetPosts();
+      setPosts(res?.data?.data);
+      setFilteredPosts(res?.data?.data);
+      console.log(filteredPosts);
+      
+    }
+    catch(error){
+      setError(error?.response?.data?.message);
+    }
+    finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getPosts();
+  },[]);
+
+  useEffect(() => {
+    if (!search) {
+      setFilteredPosts(posts);
+    }
+    const filteredPosts = posts.filter((post) => {
+      const promptMatch = post?.prompt?.toLowerCase().includes(search);
+      const authorMatch = post?.author?.toLowerCase().includes(search);
+
+      return promptMatch || authorMatch;
+    });
+
+    if (search) {
+      setFilteredPosts(filteredPosts);
+    }
+  }, [posts, search]);
+
   return (
     <Container>
       <Headline>
-        Explore the posts of our community
-        <Span>
-          Generative AI
-        </Span>
+        Explore popular posts in the Community!
+        <Span>Generated with AI</Span>
       </Headline>
-      <SearchBar />
+      <SearchBar
+        search={search}
+        handleChange={(e) => setSearch(e.target.value)}
+      />
       <Wrapper>
-        <CardWrapper>
-          <ImageCard prompt="Hello World" author="Harshil" photo="https://tse3.mm.bing.net/th?id=OIP.j4KdqaXpnhbN94WzVyHUhAHaE8&pid=Api&P=0&h=220"/>
-        </CardWrapper>
+        {error && <div style={{ color: "red" }}>{error}</div>}
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <CardWrapper>
+            {filteredPosts.length > 0 ? (
+              <>
+                {filteredPosts
+                  .slice()
+                  .reverse()
+                  .map((item, index) => (
+                    <ImageCard key={index} item={item} />
+                  ))}
+              </>
+            ) : (
+              <>No Posts Found !!</>
+            )}
+          </CardWrapper>
+        )}
       </Wrapper>
     </Container>
   )
