@@ -16,7 +16,7 @@ const SearchBarContainer = styled.div`
 `;
 
 
-const SearchBar = () => {
+const SearchBar = ({search, setSearch}) => {
     return (
         <SearchBarContainer>
             <SearchOutlined/>
@@ -30,7 +30,9 @@ const SearchBar = () => {
                     color: "inherit",
                     fontSize: "16px"
 
-                }}/>
+                }}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}/>
         </SearchBarContainer>
     )
 }

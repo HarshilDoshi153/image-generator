@@ -91,8 +91,8 @@ const Home = () => {
       setFilteredPosts(posts);
     }
     const filteredPosts = posts.filter((post) => {
-      const promptMatch = post?.prompt?.toLowerCase().includes(search);
-      const authorMatch = post?.author?.toLowerCase().includes(search);
+      const promptMatch = post?.prompt?.toLowerCase().includes(search.toString().toLowerCase());
+      const authorMatch = post?.author?.toLowerCase().includes(search.toString().toLowerCase());
 
       return promptMatch || authorMatch;
     });
@@ -110,7 +110,7 @@ const Home = () => {
       </Headline>
       <SearchBar
         search={search}
-        handleChange={(e) => setSearch(e.target.value)}
+        setSearch = {setSearch}
       />
       <Wrapper>
         {error && <div style={{ color: "red" }}>{error}</div>}
