@@ -29,7 +29,6 @@ const SearchBar = ({search, setSearch}) => {
                     width: "100%",
                     color: "inherit",
                     fontSize: "16px"
-
                 }}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}/>
